@@ -31,11 +31,22 @@
 #define _FILESYSTEM_SELECTOR(dev, ...) _FILESYSTEM_SELECTOR_concat(dev, __VA_ARGS__)
 
 BlockDevice* storage_selector() {
+#ifdef MBED_CONF_STORAGE_SELECTOR_STORAGE
     return _STORAGE_SELECTOR(MBED_CONF_STORAGE_SELECTOR_STORAGE);
+#else
+    printf("Trying to generate default block device\n");
+    BlockDevice * bd = BlockDevice::get_default_instance();
+    if (bd == NULL) {
+        printf("No Default block device configured.\n");
+    }
+    return bd;
+#endif
 }
 
-#ifdef MBED_CONF_STORAGE_SELECTOR_FILESYSTEM
+
 bool _filesystem_initialized[MBED_CONF_STORAGE_SELECTOR_FILESYSTEM_INSTANCES];
+
+#ifdef MBED_CONF_STORAGE_SELECTOR_FILESYSTEM
 
 FileSystem* filesystem_selector(const char* mount, BlockDevice* bd, unsigned int instance_number) {
     // Filesystem numbering starts at 1, not 0
@@ -54,6 +65,25 @@ FileSystem* filesystem_selector(const char* mount, BlockDevice* bd, unsigned int
 
 FileSystem* filesystem_selector(const char* mount) {
     return filesystem_selector(mount, storage_selector(), 1);
+}
+#else
+
+FileSystem* filesystem_selector(const char* mount, BlockDevice* bd, unsigned int instance_number) {
+
+    if (instance_number > 1){
+        printf("Storage selector file system is not defined therefore only 1 default filesystem exists\n");
+    }
+
+    _filesystem_initialized[1] = true;
+    FileSystem * fs = FileSystem::get_default_instance();
+    if (fs == NULL) {
+        printf("No default filesystem.\n");
+    }
+    return fs;
+}
+
+FileSystem* filesystem_selector(const char* mount) {
+    return filesystem_selector(NULL, NULL, 1);
 }
 
 #endif //MBED_CONF_STORAGE_SELECTOR_FILESYSTEM

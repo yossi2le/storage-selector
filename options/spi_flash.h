@@ -17,7 +17,7 @@
 #ifndef SPI_FLASH_H
 #define SPI_FLASH_H
 
-#ifdef DEVICE_SPI
+#if DEVICE_SPI && COMPONENT_SPIF
 
 #include "SPIFBlockDevice.h"
 

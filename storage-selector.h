@@ -22,11 +22,15 @@
 
 BlockDevice* storage_selector();
 
-#ifdef MBED_CONF_STORAGE_SELECTOR_FILESYSTEM
-
 mbed::FileSystem* filesystem_selector(const char* mount, BlockDevice* bd, unsigned int instance_number = 1);
 
+#ifdef MBED_CONF_STORAGE_SELECTOR_FILESYSTEM
+
 mbed::FileSystem* filesystem_selector(const char* mount = MBED_CONF_STORAGE_SELECTOR_MOUNT_POINT);
+
+#else
+
+mbed::FileSystem* filesystem_selector(const char* mount = NULL);
 
 #endif //MBED_CONF_STORAGE_SELECTOR_FILESYSTEM
 

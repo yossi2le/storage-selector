@@ -3,7 +3,7 @@
     "config": {
         "storage": {
             "help": "Options are SD_CARD, SPI_FLASH, DATA_FLASH, INTERNAL_FLASH, and HEAP",
-            "required": true
+            "required": false
         },
         "filesystem": {
             "help": "Options are FAT and LITTLE",
@@ -19,7 +19,7 @@
         },
         "heap_size": {
             "help": "Size to use for HEAP storage option",
-            "value": 2048
+            "value": 65536
         }
     }
 }

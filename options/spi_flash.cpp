@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#ifdef DEVICE_SPI
+#if DEVICE_SPI && COMPONENT_SPIF
 
 #include "SPIFBlockDevice.h"
 

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifdef DEVICE_FLASH
+#if DEVICE_FLASH && COMPONENT_FLASHIAP
 
 #include "FlashIAPBlockDevice.h"
 

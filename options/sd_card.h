@@ -17,7 +17,7 @@
 #ifndef _SD_CARD_H_
 #define _SD_CARD_H_
 
-#ifdef DEVICE_SPI
+#if DEVICE_SPI && COMPONENT_SD
 
 #include "SDBlockDevice.h"
 
